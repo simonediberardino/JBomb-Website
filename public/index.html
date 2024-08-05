@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JBomb The Game</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/plyr.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <!-- Add custom JavaScript -->
+    <script>
+        function setDownloadLink() {
+            var downloadLinks = document.getElementsByClassName('download-link');
+            var platform = navigator.platform.toLowerCase();
+            var hrefValue;
+    
+            if (platform.includes('win')) {
+                hrefValue = 'https://raw.githubusercontent.com/simonediberardino/jbomb_setups/main/jbomb_installer.exe';
+            } else if (platform.includes('mac') || platform.includes('linux') || platform.includes('unix')) {
+                hrefValue = 'https://jbombthegame.github.io/files/installer.sh';
+            } else {
+                // Default to Windows installer if the platform is not recognized
+                hrefValue = 'https://raw.githubusercontent.com/simonediberardino/jbomb_setups/main/jbomb_installer.exe';
+            }
+    
+            for (var i = 0; i < downloadLinks.length; i++) {
+                downloadLinks[i].href = hrefValue;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', setDownloadLink);
+    </script>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header__logo">
+                        <a href="./index.html">
+                            <img src="img/logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="header__nav">
+                        <nav class="header__menu mobile-menu">
+                            <ul>
+                                <li class="active"><a href="./index.html">Homepage</a></li>
+                                <li><a href="./about.html">About</a></li>
+                                <li><a href="./reviews.html">Reviews</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <!-- Hero Section Begin -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero__slider owl-carousel">
+                <div class="hero__items set-bg" data-setbg="img/previews/0.png">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero__text">
+                                <div class="label">Adventure</div>
+                                <br>
+                                <div class="label"><h2>JBomb The Game</h2></div>
+
+                                <div class="label">JBomb is a 2D videogame where the objective is to strategically place bombs to eliminate opponents and obstacles. JBomb offers dynamic gameplay, challenging puzzles and different game modes, including multiplayer.</div>
+                                <a class="download-link" href="#"><span>Download now</span> <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__items set-bg" data-setbg="img/previews/1.png">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero__text">
+                                <div class="label">Adventure</div>
+                                <br>
+                                <div class="label"><h2>JBomb The Game</h2></div>
+
+                                <div class="label">JBomb is a 2D videogame where the objective is to strategically place bombs to eliminate opponents and obstacles. JBomb offers dynamic gameplay, challenging puzzles and different game modes, including multiplayer.</div>
+                                <a class="download-link" href="#"><span>Download now</span> <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__items set-bg" data-setbg="img/previews/2.png">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero__text">
+                                <div class="label">Adventure</div>
+                                <br>
+                                <div class="label"><h2>JBomb The Game</h2></div>
+
+                                <div class="label">JBomb is a 2D videogame where the objective is to strategically place bombs to eliminate opponents and obstacles. JBomb offers dynamic gameplay, challenging puzzles and different game modes, including multiplayer.</div>
+                                <a class="download-link" href="#"><span>Download now</span> <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__items set-bg" data-setbg="img/previews/3.png">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero__text">
+                                <div class="label">Adventure</div>
+                                <br>
+                                <div class="label"><h2>JBomb The Game</h2></div>
+
+                                <div class="label">JBomb is a 2D videogame where the objective is to strategically place bombs to eliminate opponents and obstacles. JBomb offers dynamic gameplay, challenging puzzles and different game modes, including multiplayer.</div>
+                                <a class="download-link" href="#"><span>Download now</span> <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__items set-bg" data-setbg="img/previews/0.png">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero__text">
+                                <div class="label">Adventure</div>
+                                <br>
+                                <div class="label"><h2>JBomb The Game</h2></div>
+
+                                <div class="label">JBomb is a 2D videogame where the objective is to strategically place bombs to eliminate opponents and obstacles. JBomb offers dynamic gameplay, challenging puzzles and different game modes, including multiplayer.</div>
+                                <a class="download-link" href="#"><span>Download now</span> <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+
+<!-- Footer Section Begin -->
+<footer class="footer">
+
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="footer__logo">
+                    <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                </div>
+                
+            </div>
+
+
+            <div class="col-lg-6">
+    
+                <div class="label" style="color: #ffffff;">
+                    JBomb presents two game modes for players to explore. 
+                    <br>
+                    In Campaign mode, embark on an adventure across diverse worlds, each featuring five levels and a formidable boss showdown. Strategically deploy bombs to navigate intricate mazes and conquer a variety of enemies and obstacles along the way.
+                    <br><br>
+                    Arena mode offers a cooperative experience. Join the arena with friends as you confront endless waves of adversaries in a dynamic online battleground. Work together to collect power-ups scattered throughout the arena, enhancing your abilities and ensuring your survival against increasingly challenging foes. Whether you're conquering levels solo or teaming up with friends, JBomb delivers thrilling strategic gameplay at every turn!
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Website base by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+
+              </div>
+          </div>
+      </div>
+  </footer>
+  <!-- Footer Section End -->
+
+<!-- Footer Section Begin -->
+<footer class="footer">
+    <div class="page-up">
+        <a href="#" id="scrollToTopButton"><span class="arrow_carrot-up"></span></a>
+    </div>
+    <div class="container">
+        <div class="footer__nav">
+            <ul>
+                <li class="active"><a href="./index.html">Homepage</a></li>
+                <li><a href="./about.html">About</a></li>
+                <li><a href="./reviews.html">Reviews</a></li>
+            </ul>
+        </div>
+      </div>
+  </footer>
+  <!-- Footer Section End -->
+
+</div>
+
+</div>
+<!-- Search model end -->
+
+<!-- Js Plugins -->
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/player.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/mixitup.min.js"></script>
+<script src="js/jquery.slicknav.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+
+</html>

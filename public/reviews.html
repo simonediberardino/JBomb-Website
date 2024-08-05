@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JBomb The Game</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/plyr.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header__logo">
+                        <a href="./index.html">
+                            <img src="img/logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="header__nav">
+                        <nav class="header__menu mobile-menu">
+                            <ul>
+                                <li><a href="./index.html">Homepage</a></li>
+                                <li><a href="./about.html">About</a></li>
+                                <li class="active"><a href="./reviews.html">Reviews</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <div class="container">     
+        <div class="row" style="padding-top: 64px; padding-left: 64px; padding-right: 64px">
+            <div class="col-lg-3">
+                <div class="footer__logo">
+                    <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <!-- Review Form -->
+                <div class="hero__text_2">
+                    <h3 class="hero__text_2">Submit a Review<br></h3>
+                    <form id="review-form">
+                        <div class="form-group">
+                            <label for="author" style="color: white;">Name</label>
+                            <input type="text" id="author" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="content" style="color: white;">Review</label>
+                            <textarea id="content" class="form-control" rows="4" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="rating" style="color: white;">Rating</label>
+                            <input type="number" id="rating" class="form-control" min="1" max="5" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="container mt-5" style="padding-bottom: 64px;">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="hero__text_2" style ="padding-bottom: 32px;">
+                        <h3>All reviews</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <div id="reviews-list" class="card-columns"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hero Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="page-up">
+            <a href="#" id="scrollToTopButton"><span class="arrow_carrot-up"></span></a>
+        </div>
+        <div class="container">
+            <div class="footer__nav">
+                <ul>
+                    <li><a href="./index.html">Homepage</a></li>
+                    <li><a href="./about.html">About</a></li>
+                    <li class="active"><a href="./reviews.html">Reviews</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- Custom JS to handle form submission and fetch reviews -->
+    <script>
+         $(document).ready(function() {
+            $('#review-form').on('submit', function(event) {
+                event.preventDefault();
+                
+                const author = $('#author').val();
+                const content = $('#content').val();
+                const rating = $('#rating').val();
+
+                // Construct the URL with parameters
+                const url = `http://snrservers.vpsgh.it:3001/reviews/author=${encodeURIComponent(author)}/content=${encodeURIComponent(content)}/rating=${rating}`;
+
+                // Send GET request to insert review
+                $.post(url, function(data, status) {
+                    console.log('Review submitted successfully');
+                    // Redirect to review confirmation page
+                    window.location.href = './review_sent.html';
+                }).fail(function(xhr, textStatus, errorThrown) {
+                    // Redirect to review confirmation page
+                    window.location.href = './review_sent.html';
+                });
+            });
+        });
+
+    // Function to fetch reviews from the server
+        function fetchReviews() {
+            $.get('http://snrservers.vpsgh.it:3001/reviews/list', function(data, status) {
+                // Clear previous reviews
+                $('#reviews-list').empty();
+
+                // Append each review to the reviews list
+                data.forEach(function(review) {
+                    const reviewItem = `<div class="card mb-4 shadow-sm">
+                                            <div class="card-body">
+                                                <h5 class="card-title"><strong>Author:</strong> ${review.author}</h5>
+                                                <p class="card-text">${review.content}</p>
+                                                <p class="card-text"><strong>Rating:</strong> ${review.rating}</p>
+                                            </div>
+                                        </div>`;
+                    $('#reviews-list').append(reviewItem);
+                });
+            }).fail(function(xhr, textStatus, errorThrown) {
+                console.error('Error fetching reviews:', errorThrown);
+                alert('Failed to fetch reviews');
+            });
+        }
+
+        // Initial fetch of reviews when the page loads
+        fetchReviews();
+    </script>
+</body>
+
+</html>
