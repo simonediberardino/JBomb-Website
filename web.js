@@ -69,6 +69,11 @@ app.get('/about', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'about.html'));
 });
 
+// Route for howtoinstall.html
+app.get('/howtoinstall', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'howtoinstall.html'));
+});
+
 // Route for reviews.html
 app.get('/reviews', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'reviews.html'));
