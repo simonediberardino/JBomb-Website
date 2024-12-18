@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JBomb The Game - Server Browser</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <style>
+        .server-list {
+            margin-top: 40px;
+        }
+
+        .server-item {
+            background-color: #2b2b2b;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        .server-item h4 {
+            margin-bottom: 10px;
+        }
+
+        .server-item p {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header__logo">
+                        <a href="./index.html">
+                            <img src="img/logo.png" alt="JBomb Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="header__nav">
+                        <nav class="header__menu mobile-menu">
+                            <ul>
+                                <li><a href="./index.html">Homepage</a></li>
+                                <li class="active"><a href="./serverbrowser.html">Server Browser</a></li>
+                                <li><a href="./about.html">About</a></li>
+                                <li><a href="./reviews.html">Reviews</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+
+    <div class="container">     
+        <div class="row" style="padding-left: 16px; padding-top: 64px">
+    
+            <div class="col-lg-6">
+
+                <div class="hero__text_2">
+                    <h2 class="hero__text_2" style="color:white">JBomb: Servers browser<br></h3>
+   
+                    </div>
+                </div>
+
+        
+
+            </div>
+        </div>
+    </div>
+    <!-- Server Browser Section -->
+    <div class="container server-list">
+        <div id="server-container" style ="padding-top:16px; padding-bottom:32px">
+            <!-- Servers will be dynamically injected here -->
+        </div>
+    </div>
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__nav">
+                <ul>
+                    <li><a href="./index.html">Homepage</a></li>
+                    <li><a href="./about.html">About</a></li>
+                    <li><a href="./reviews.html">Reviews</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script>
+ document.addEventListener('DOMContentLoaded', function() {
+    const serverContainer = document.getElementById('server-container');
+
+    // Fetch the server data from the API
+    fetch('http://jbombthegame.com/servers')
+        .then(response => {
+            // Check if the response is OK and in JSON format
+            if (!response.ok) {
+                throw new Error(`Network response was not ok (${response.status})`);
+            }
+            return response.json();
+        })
+        .then(servers => {
+            // Clear the container
+            serverContainer.innerHTML = '';
+
+            // Check if servers are returned, or if it's an empty array or string
+            if (!servers || servers.length === 0 || typeof servers === 'string') {
+                serverContainer.innerHTML = '<p style="color: white;">No available public servers are active now.</p>';
+                return;
+            }
+
+            // Use a DocumentFragment for better performance when appending multiple elements
+            const fragment = document.createDocumentFragment();
+
+            // Loop through each server and create an HTML block
+            servers.forEach(server => {
+                const serverItem = document.createElement('div');
+                serverItem.classList.add('server-item');
+
+                // Ensure all required fields are present, handle any missing data
+                const name = server.name || 'Unknown Server';
+                const ip = server.ip || 'N/A';
+                const port = server.port || 'N/A';
+                const players = server.players || '0';
+
+				
+				var text = `
+                    <h4 style="color: white;">${name}</h4>
+                `;
+				
+				console.log(server.dedicatedServer);
+				if (server.dedicatedServer == "true") {
+					text += `
+						<p style="color: white;"><strong>IP:</strong> ${ip}</p>
+						<p style="color: white;"><strong>Port:</strong> ${port}</p>
+				`
+				}
+				text += `        
+                    <p style="color: white;"><strong>Players:</strong> ${players}</p>
+				`;
+				
+                serverItem.innerHTML = text;
+
+                // Append the server item to the fragment
+                fragment.appendChild(serverItem);
+            });
+
+            // Append the fragment to the server container in one go for better performance
+            serverContainer.appendChild(fragment);
+        })
+        .catch(error => {
+            serverContainer.innerHTML = '<p style="color: white;">Error fetching server data. Please try again later.</p>';
+            console.error('Error fetching server data:', error);
+        });
+});
+
+    </script>
+</body>
+
+</html>

@@ -3,6 +3,46 @@ const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
+const liveServers = {};
+
+class ServerInfo {
+    constructor(name, ip, port, players, ping, dedicatedServer) {
+        this.name = name;
+        this.players = players;
+        this.ping = ping;
+        this.ip = ip;
+        this.port = port;
+		this.dedicatedServer = dedicatedServer;
+    }
+
+    getFullIp() {
+        return `${this.ip}:${this.port}`;
+    }
+
+    getPort() {
+        return this.port;
+    }
+
+    getIp() {
+        return this.ip;
+    }
+
+    getName() {
+        return this.name;
+    }
+
+    getPlayers() {
+        return this.players;
+    }
+
+    getPing() {
+        return this.ping;
+    }
+	
+	isDedicatedServer() {
+        return this.dedicatedServer;
+    }
+}
 
 // Create an instance of an Express application
 const app = express();
@@ -14,7 +54,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Define the port the server will listen on
-const PORT = 3001;
+const PORT = 80;
 
 // Define the path to your SQLite database file
 const dbPath = path.resolve(__dirname, 'data', 'reviews.db'); // Adjust path as needed
@@ -59,6 +99,71 @@ app.use((req, res, next) => {
   next();
 });
 
+
+// GAME BACKEND: SERVER BROWSER
+app.get("/servers", (req, res) => {
+    const servers = Object.values(liveServers).map(serverObj => ({
+        name: serverObj.getName(),
+        ip: serverObj.getIp(),
+        port: serverObj.getPort(),
+        players: serverObj.getPlayers(),
+        ping: serverObj.getPing(),
+		dedicatedServer: serverObj.isDedicatedServer()
+    }));
+
+    res.json(servers);
+});
+
+app.get("/server", (req, res) => {
+    const ip = req.body.ip;
+    const port = req.body.port;
+
+    const serverKey = `${ip}:${port}`;
+    const serverObj = liveServers[serverKey];
+
+    if (serverObj) {
+        res.json({
+            name: serverObj.getName(),
+            ip: serverObj.getIp(),
+            port: serverObj.getPort(),
+            players: serverObj.getPlayers(),
+            ping: serverObj.getPing(),
+			dedicatedServer: serverObj.isDedicatedServer()
+        });
+    } else {
+        res.status(404).json({ error: "Server not found" });
+    }
+});
+
+app.delete("/server", (req, res) => {
+    const ip = req.body.ip;
+    const port = req.body.port;
+    const serverKey = `${ip}:${port}`;
+    
+    if (liveServers[serverKey]) {
+        delete liveServers[serverKey];
+        res.json({ message: "Server deleted successfully" });
+    } else {
+        res.status(404).json({ error: "Server not found" });
+    }
+});
+
+app.post("/server", (req, res) => {	
+	const ip = req.body.ip;
+	const port = req.body.port;
+	const name = req.body.name;
+	const players = req.body.players;
+	const dedicatedServer = req.body.dedicatedServer;
+
+	const serverObj = new ServerInfo(name, ip, port, players, 0, dedicatedServer);
+	liveServers[serverObj.getFullIp()] = serverObj;
+	
+	res.status(200).json( { body: "OK" } );
+});
+
+
+// WEBSITE SERVER
+
 // Route for index.html
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -82,6 +187,11 @@ app.get('/reviews', (req, res) => {
 // Route for review_sent.html
 app.get('/review_sent', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'review_sent.html'));
+});
+
+// Route for review_sent.html
+app.get('/serverbrowser', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'serverbrowser.html'));
 });
 
 // Define a route for GET requests to save a new review
@@ -121,4 +231,5 @@ app.get('/reviews/list', (req, res) => {
 
 // Start the server and have it listen on the specified port
 app.listen(PORT, () => {
+	console.log("Listening JBomb at " + PORT);
 });
